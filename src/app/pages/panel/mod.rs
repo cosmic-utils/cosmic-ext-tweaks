@@ -23,6 +23,8 @@ pub struct Panel {
     pub spacing: u32,
     pub border_radius: u32,
     pub show_panel: bool,
+    pub keep_style_on_maximize: bool,
+    pub keep_transparency_on_maximize: bool,
     pub cosmic_panel_config: CosmicPanel,
     pub cosmic_panel_config_helper: Option<Config>,
     pub cosmic_panel_button_config: CosmicPanelButtonConfig,
@@ -116,6 +118,14 @@ impl Default for Panel {
             .map(|config| config.size)
             .unwrap_or(cosmic_panel_config::PanelSize::M);
         let show_panel = cosmic_panel_config.entries.iter().any(|e| e == "Panel");
+        let keep_style_on_maximize = panel_config
+            .clone()
+            .map(|config| config.keep_style_on_maximize)
+            .unwrap_or(false);
+        let keep_transparency_on_maximize = panel_config
+            .clone()
+            .map(|config| config.keep_transparency_on_maximize)
+            .unwrap_or(false);
         let force_icons = cosmic_panel_button_config
             .configs
             .iter()
@@ -139,6 +149,8 @@ impl Default for Panel {
             spacing,
             border_radius,
             show_panel,
+            keep_style_on_maximize,
+            keep_transparency_on_maximize,
             cosmic_panel_config,
             cosmic_panel_config_helper,
             cosmic_panel_button_config,
@@ -157,6 +169,8 @@ pub enum Message {
     SetSpacing(u32),
     SetBorder(u32),
     ShowPanel(bool),
+    KeepStyleOnMaximize(bool),
+    KeepTransparencyOnMaximize(bool),
     ForceIcons(bool),
     SetPanelSize(i32),
     SetWaitTime(u32),
@@ -247,6 +261,19 @@ impl Panel {
                                 ))
                                 .push(widget::text::text(format!("{} px", self.border_radius)))
                                 .spacing(spacing.space_xxs),
+                        ),
+                )
+                .add(
+                    widget::settings::item::builder(fl!("keep-style-on-maximize"))
+                        .icon(icon!("eye-outline-symbolic", 18))
+                        .toggler(self.keep_style_on_maximize, Message::KeepStyleOnMaximize),
+                )
+                .add(
+                    widget::settings::item::builder(fl!("keep-transparency-on-maximize"))
+                        .icon(icon!("eye-outline-symbolic", 18))
+                        .toggler(
+                            self.keep_transparency_on_maximize,
+                            Message::KeepTransparencyOnMaximize,
                         ),
                 )
                 .into(),
@@ -364,6 +391,24 @@ impl Panel {
                 let update = panel_config.set_border_radius(panel_helper, self.border_radius);
                 if let Err(err) = update {
                     log::error!("Error updating panel border: {}", err);
+                }
+            }
+            Message::KeepStyleOnMaximize(keep) => {
+                self.keep_style_on_maximize = keep;
+                let update = panel_config
+                    .set_keep_style_on_maximize(panel_helper, self.keep_style_on_maximize);
+                if let Err(err) = update {
+                    log::error!("Error updating panel config: {}", err);
+                }
+            }
+            Message::KeepTransparencyOnMaximize(keep) => {
+                self.keep_transparency_on_maximize = keep;
+                let update = panel_config.set_keep_transparency_on_maximize(
+                    panel_helper,
+                    self.keep_transparency_on_maximize,
+                );
+                if let Err(err) = update {
+                    log::error!("Error updating panel config: {}", err);
                 }
             }
             Message::ForceIcons(force) => {

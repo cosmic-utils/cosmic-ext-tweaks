@@ -16,6 +16,8 @@ pub struct Dock {
     pub margin: u16,
     pub spacing: u32,
     pub border_radius: u32,
+    pub keep_style_on_maximize: bool,
+    pub keep_transparency_on_maximize: bool,
     autohide_behavior: AutoHideBehavior,
 }
 
@@ -39,6 +41,14 @@ impl Default for Dock {
             .clone()
             .map(|config| config.border_radius)
             .unwrap_or(0);
+        let keep_style_on_maximize = dock_config
+            .clone()
+            .map(|config| config.keep_style_on_maximize)
+            .unwrap_or(false);
+        let keep_transparency_on_maximize = dock_config
+            .clone()
+            .map(|config| config.keep_transparency_on_maximize)
+            .unwrap_or(false);
         let autohide = dock_config
             .clone()
             .map(|config| config.autohide_behavior)
@@ -50,6 +60,8 @@ impl Default for Dock {
             margin,
             spacing,
             border_radius,
+            keep_style_on_maximize,
+            keep_transparency_on_maximize,
             autohide_behavior: autohide,
         }
     }
@@ -64,6 +76,8 @@ pub enum Message {
     SetWaitTime(u32),
     SetTransitionTime(u32),
     SetHandleSize(u32),
+    KeepStyleOnMaximize(bool),
+    KeepTransparencyOnMaximize(bool),
     Reset,
 }
 
@@ -119,6 +133,19 @@ impl Dock {
                                 ))
                                 .push(widget::text::text(format!("{} px", self.border_radius)))
                                 .spacing(spacing.space_xxs),
+                        ),
+                )
+                .add(
+                    widget::settings::item::builder(fl!("keep-style-on-maximize"))
+                        .icon(icon!("eye-outline-symbolic", 18))
+                        .toggler(self.keep_style_on_maximize, Message::KeepStyleOnMaximize),
+                )
+                .add(
+                    widget::settings::item::builder(fl!("keep-transparency-on-maximize"))
+                        .icon(icon!("eye-outline-symbolic", 18))
+                        .toggler(
+                            self.keep_transparency_on_maximize,
+                            Message::KeepTransparencyOnMaximize,
                         ),
                 )
                 .into(),
@@ -230,6 +257,24 @@ impl Dock {
                 let update = dock_config.set_border_radius(dock_helper, self.border_radius);
                 if let Err(err) = update {
                     log::error!("Error updating panel border: {}", err);
+                }
+            }
+            Message::KeepStyleOnMaximize(keep) => {
+                self.keep_style_on_maximize = keep;
+                let update = dock_config
+                    .set_keep_style_on_maximize(dock_helper, self.keep_style_on_maximize);
+                if let Err(err) = update {
+                    log::error!("Error updating panel config: {}", err);
+                }
+            }
+            Message::KeepTransparencyOnMaximize(keep) => {
+                self.keep_transparency_on_maximize = keep;
+                let update = dock_config.set_keep_transparency_on_maximize(
+                    dock_helper,
+                    self.keep_transparency_on_maximize,
+                );
+                if let Err(err) = update {
+                    log::error!("Error updating panel config: {}", err);
                 }
             }
             Message::SetWaitTime(wait_time) => {
