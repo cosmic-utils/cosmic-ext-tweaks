@@ -23,6 +23,7 @@ pub struct Panel {
     pub spacing: u32,
     pub border_radius: u32,
     pub show_panel: bool,
+    pub border_width: f32,
     pub cosmic_panel_config: CosmicPanel,
     pub cosmic_panel_config_helper: Option<Config>,
     pub cosmic_panel_button_config: CosmicPanelButtonConfig,
@@ -116,6 +117,10 @@ impl Default for Panel {
             .map(|config| config.size)
             .unwrap_or(cosmic_panel_config::PanelSize::M);
         let show_panel = cosmic_panel_config.entries.iter().any(|e| e == "Panel");
+        let border_width = panel_config
+            .clone()
+            .map(|config| config.border_width)
+            .unwrap_or(0.0);
         let force_icons = cosmic_panel_button_config
             .configs
             .iter()
@@ -139,6 +144,7 @@ impl Default for Panel {
             spacing,
             border_radius,
             show_panel,
+            border_width,
             cosmic_panel_config,
             cosmic_panel_config_helper,
             cosmic_panel_button_config,
@@ -157,6 +163,7 @@ pub enum Message {
     SetSpacing(u32),
     SetBorder(u32),
     ShowPanel(bool),
+    BorderWidth(f32),
     ForceIcons(bool),
     SetPanelSize(i32),
     SetWaitTime(u32),
@@ -246,6 +253,25 @@ impl Panel {
                                     Message::SetBorder,
                                 ))
                                 .push(widget::text::text(format!("{} px", self.border_radius)))
+                                .spacing(spacing.space_xxs),
+                        ),
+                )
+                .add(
+                    widget::settings::item::builder(fl!("border-width"))
+                        .description(fl!("border-width-description"))
+                        .icon(icon!("resize-mode-symbolic", 18))
+                        .control(
+                            widget::row(vec![])
+                                .push(
+                                    widget::slider(
+                                        0.0..=3.0,
+                                        self.border_width,
+                                        Message::BorderWidth,
+                                    )
+                                    .breakpoints(&[0.2, 0.5, 1.0, 2.0])
+                                    .step(0.1f32),
+                                )
+                                .push(widget::text(format!("{:.1} px", self.border_width)))
                                 .spacing(spacing.space_xxs),
                         ),
                 )
@@ -364,6 +390,13 @@ impl Panel {
                 let update = panel_config.set_border_radius(panel_helper, self.border_radius);
                 if let Err(err) = update {
                     log::error!("Error updating panel border: {}", err);
+                }
+            }
+            Message::BorderWidth(border_width) => {
+                self.border_width = border_width;
+                let update = panel_config.set_border_width(panel_helper, self.border_width);
+                if let Err(err) = update {
+                    log::error!("Error updating panel border width: {}", err);
                 }
             }
             Message::ForceIcons(force) => {
