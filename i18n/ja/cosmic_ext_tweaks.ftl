@@ -1,5 +1,5 @@
-app-title = Tweaks for COSMIC
-app-description = COSMICデスクトップ体験のパーソナライゼーションツール
+app-title = Tweaks for COSMIC™
+app-description = COSMIC™デスクトップ体験をカスタマイズするツールです。
 
 # Pages
 home = ホーム
@@ -9,42 +9,80 @@ color-schemes = カラースキーム
 layouts = レイアウト
 shortcuts = ショートカット
 snapshots = スナップショット
+animation = アニメーション
 
-color-schemes-error = カラースキームが読み込みませんでした
+create-layout = レイアウトを作成
+apply-layout = レイアウトを適用
+delete-layout = レイアウトを削除
+layout-name = レイアウトの名前
+layout-name-empty = レイアウトの名前は空にできません。
+dock-icons = ドックのアイコン
+show-window = ウィンドウを表示
+preview = プレビュー
+layout-exists-error = この名前のレイアウトはすでに存在します。
+layout-name-required = 名前は必須です。
+panel-properties = パネルのプロパティ
+panel-position = パネルの位置
+panel-size = パネルのサイズ
+dock-properties = ドックのプロパティ
+position = 位置
+extend = 画面の端まで広げる
+size = サイズ
+top = 上
+bottom = 下
+left = 左
+right = 右
+enable = 有効にする
+show = 表示
+
+color-schemes-error = カラースキームの読み込みエラー
 import-color-scheme = カラースキームをインポート
-delete-color-scheme = カラースキームをエクスポート
-available-color-schemes-body = カラースキームを探してインストール…
+delete-color-scheme = カラースキームを削除
+available-color-schemes-body = カラースキームを探してインストール
 install-color-scheme = カラースキームをインストール
+set-color-scheme = カラースキームを設定
 find-color-schemes = カラースキームを探す
-open-containing-folder = 保存先
+open-containing-folder = 保存先フォルダーを開く
 open-link = リンクを開く
 installed = インストール済み
-available = Available
+available = 利用可能
 loading = 読み込み中…
-refresh = Refresh
+refresh = 更新
 show-more = さらに表示
-no-color-schemes-installed = No color schemes installed
-no-color-schemes-found = No color schemes found
-by = By {$author}
-revert-old-color-scheme = Revert old color scheme
+no-color-schemes-installed = インストール済みのカラースキームはありません
+no-color-schemes-found = カラースキームが見つかりません
+by = 作者: {$author}
+revert-old-color-scheme = 以前のカラースキームに戻す
 
 a-z = A-Z
-most-downloaded = Most downloaded
-last-modified = Last modified
-author = Author
-search = Search
+most-downloaded = ダウンロード数順
+last-modified = 最終更新順
+author = 作者
+search = 検索
 
+## Panel
 show-panel = パネルを表示
-force-icon-buttons-in-panel = 常にパネルでボタンを表示
-size = Size
-size-description = The height of the panel and applets
-
+show-dock = ドックを表示
+force-icon-buttons-in-panel = パネル内のボタンを強制的にアイコン表示にする
+size = サイズ
+size-description = パネルとアプレットの高さ
 padding = 余白
-padding-description = 内容と枠線の間の空間です。
-margin = Margin
-margin-description = Margin is the space between the panel and the edges of the screen.
+padding-description = 余白は、ドックまたはパネルの内容と枠線の間のスペースです。
+margin = マージン
+margin-description = マージンは、パネルと画面の端の間のスペースです。
 spacing = 間隔
-spacing-description = アイコンの間の空間です。
+spacing-description = 間隔は、ドックまたはパネル内のアイコン間のスペースです。
+border-radius = 角の丸み
+border-radius-description = 角の丸みは、ドックまたはパネルの丸さの度合いです。
+border-width = 枠線の太さ
+border-width-description = 枠線の太さは、ドックまたはパネルの周りの枠線の太さです。
+animation-speed = アニメーションの速度
+wait-time = 待機時間
+wait-time-description = 待機時間は、マウスポインターがパネルから離れてからパネルが隠れるまでの時間です。
+transition-time = 切り替え時間
+transition-time-description = 切り替え時間は、パネルが表示または非表示になるまでにかかる時間です。
+handle-size = ハンドルのサイズ
+handle-size-description = ハンドルのサイズは、パネルのサイズ変更に使うハンドルの大きさです。
 
 save = 保存
 cancel = キャンセル
@@ -53,28 +91,31 @@ create = 作成
 
 navigation = ナビゲーション
 
-save-current-color-scheme = 現代のカラースキームを保存
+
+save-current-layout = 現在のレイアウトを保存
+save-current-layout-description = 現在のデスクトップのレイアウトを保存して、後で使えるようにします。
+save-current-color-scheme = 現在のカラースキームを保存
 color-scheme-name = カラースキームの名前
 create-snapshot = スナップショットを作成
-create-snapshot-description = スナップショットを作成しそうです。これは後でデスクトップの現代の状態に戻れるためのです。
-restore-snapshot = スナップショットに戻る
+create-snapshot-description = スナップショットを作成します。現在のデスクトップの状態が保存され、後で復元できるようになります。
+restore-snapshot = スナップショットを復元
 delete-snapshot = スナップショットを削除
 no-snapshots = スナップショットはありません
 snapshot-name = スナップショットの名前
 name = 名前
 type = 種類
 created = 作成日
-actions = 行動
+actions = 操作
 system = システム
 user = ユーザー
 
 ## Snapshots
 application-opened = アプリケーションを開きました
-restore-info = Each time you open Tweaks, we save the current state of your desktop, if you ever break it, simply restore it
+restore-info = Tweaksを開くたびに、デスクトップの現在の状態を保存します。デスクトップが壊れてしまっても、復元するだけで元に戻せます。
 
 ## About
-about = Tweaks for COSMICについて
-repository = レポジトリー
+about = このアプリについて
+repository = リポジトリ
 support = サポート
 website = ウェブサイト
 
@@ -89,10 +130,18 @@ dark = ダーク
 light = ライト
 
 # Menu
-view = 表示
-
+menu-settings = 設定…
+menu-about = Tweaksについて…
 
 ## Shortcuts
 
-warning = ご注意：これは現代のカスタムなショートカットを削除します。
-windows-desc = スーパーキー+矢印キーでウィンドウを移動します。コントロール+Alt+矢印キーでワークスペースを切り替えます。
+warning = 警告
+warning-desc = 既存のカスタムショートカットの一部が上書きされます。
+windows-desc = Super+矢印キーでウィンドウを移動します。Ctrl+Alt+矢印キーでワークスペースを切り替えます。
+presets = プリセット
+apply = 適用
+
+## Reset
+reset-to-defaults = デフォルトに戻す
+reset-to-defaults-warning = このページのすべての設定がデフォルト値に戻ります。行ったカスタマイズはすべて完全に失われます。
+reset = リセット
