@@ -16,6 +16,7 @@ pub struct Dock {
     pub margin: u16,
     pub spacing: u32,
     pub border_radius: u32,
+    pub border_width: f32,
     autohide_behavior: AutoHideBehavior,
 }
 
@@ -39,6 +40,10 @@ impl Default for Dock {
             .clone()
             .map(|config| config.border_radius)
             .unwrap_or(0);
+        let border_width = dock_config
+            .clone()
+            .map(|config| config.border_width)
+            .unwrap_or(0.0);
         let autohide = dock_config
             .clone()
             .map(|config| config.autohide_behavior)
@@ -50,6 +55,7 @@ impl Default for Dock {
             margin,
             spacing,
             border_radius,
+            border_width,
             autohide_behavior: autohide,
         }
     }
@@ -64,6 +70,7 @@ pub enum Message {
     SetWaitTime(u32),
     SetTransitionTime(u32),
     SetHandleSize(u32),
+    BorderWidth(f32),
     Reset,
 }
 
@@ -118,6 +125,25 @@ impl Dock {
                                     Message::SetBorder,
                                 ))
                                 .push(widget::text::text(format!("{} px", self.border_radius)))
+                                .spacing(spacing.space_xxs),
+                        ),
+                )
+                .add(
+                    widget::settings::item::builder(fl!("border-width"))
+                        .description(fl!("border-width-description"))
+                        .icon(icon!("resize-mode-symbolic", 18))
+                        .control(
+                            widget::row(vec![])
+                                .push(
+                                    widget::slider(
+                                        0.0..=3.0,
+                                        self.border_width,
+                                        Message::BorderWidth,
+                                    )
+                                    .breakpoints(&[0.2, 0.5, 1.0, 2.0])
+                                    .step(0.1f32),
+                                )
+                                .push(widget::text(format!("{:.1} px", self.border_width)))
                                 .spacing(spacing.space_xxs),
                         ),
                 )
@@ -230,6 +256,13 @@ impl Dock {
                 let update = dock_config.set_border_radius(dock_helper, self.border_radius);
                 if let Err(err) = update {
                     log::error!("Error updating panel border: {}", err);
+                }
+            }
+            Message::BorderWidth(border_width) => {
+                self.border_width = border_width;
+                let update = dock_config.set_border_width(dock_helper, self.border_width);
+                if let Err(err) = update {
+                    log::error!("Error updating panel border width: {}", err);
                 }
             }
             Message::SetWaitTime(wait_time) => {
