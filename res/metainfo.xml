@@ -176,6 +176,18 @@
     <id>com.system76.CosmicApplication</id>
   </provides>
   <releases>
+      <release version="0.2.6" date="2026-11-22">
+        <description>
+            <p>Updated layouts for COSMIC 1.11</p>
+            <ul>
+                <li>Refreshed all four built-in layouts and updated the COSMIC preset to match the current desktop defaults.</li>
+                <li>Fixed loading older layouts and snapshots that use legacy padding and corner radius settings.</li>
+                <li>Fixed an issue that prevented layout changes from taking effect after resetting panel or dock settings.</li>
+                <li>Setting panel or dock padding to zero now restores the theme default.</li>
+                <li>Updated dependencies and moved the Flatpak build to Freedesktop SDK 26.08.</li>
+            </ul>
+        </description>
+    </release>
     <release version="0.2.5" date="2026-07-16">
         <description>
             <p>Flatpak fix 📦</p>

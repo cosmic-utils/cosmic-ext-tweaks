@@ -131,7 +131,6 @@ impl CreateLayoutDialog {
         let spacing = cosmic::theme::spacing();
         let name = self.name.to_string().clone();
         let preview = self.preview;
-        let panel_type = panel_type;
 
         widget::settings::item::builder(fl!("position"))
             .icon(icon!("resize-mode-symbolic", 18))
@@ -159,7 +158,6 @@ impl CreateLayoutDialog {
         let preview = self.preview;
         let error = self.error.clone();
         let panel_props = *panel_props;
-        let panel_type = panel_type;
 
         widget::settings::item::builder(fl!("size"))
             .icon(icon!("resize-mode-symbolic", 18))

@@ -172,12 +172,11 @@ impl Layouts {
 
                 let layouts_dir =
                     dirs::data_local_dir().map(|path| path.join(App::APP_ID).join("layouts"));
-                if let Some(dir) = layouts_dir {
-                    if dir.exists() {
-                        if let Err(e) = std::fs::remove_dir_all(&dir) {
-                            log::error!("Failed to clear layouts directory: {}", e);
-                        }
-                    }
+                if let Some(dir) = layouts_dir
+                    && dir.exists()
+                    && let Err(e) = std::fs::remove_dir_all(&dir)
+                {
+                    log::error!("Failed to clear layouts directory: {}", e);
                 }
                 if let Err(e) = Layouts::init() {
                     log::error!("Failed to reinitialize default layouts: {}", e);

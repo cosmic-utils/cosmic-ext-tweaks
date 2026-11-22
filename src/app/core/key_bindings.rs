@@ -9,7 +9,7 @@ use crate::app::action::TweaksAction;
 pub struct KeyBindings;
 
 impl KeyBindings {
-    pub fn new() -> HashMap<KeyBind, TweaksAction> {
+    pub fn defaults() -> HashMap<KeyBind, TweaksAction> {
         let mut key_binds = HashMap::new();
 
         macro_rules! bind {

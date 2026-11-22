@@ -41,7 +41,7 @@ impl Cosmic {
         let about = About::default()
             .name(fl!("app-title"))
             .icon(widget::icon::from_name(App::APP_ID))
-            .version("0.2.5")
+            .version("0.2.6")
             .author("Eduardo Flores")
             .license("GPL-3.0-only")
             .links([
@@ -66,7 +66,7 @@ impl Cosmic {
                 about,
                 dialog_pages: VecDeque::new(),
                 dialog_text_input: widget::Id::unique(),
-                key_binds: KeyBindings::new(),
+                key_binds: KeyBindings::defaults(),
                 modifiers: Modifiers::empty(),
                 context_page: ContextPage::About,
                 app_themes: vec![fl!("match-desktop"), fl!("dark"), fl!("light")],

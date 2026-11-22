@@ -54,9 +54,7 @@ pub fn apply_theme(builder: &ThemeBuilder) -> anyhow::Result<()> {
 
     // Ensure the current mode matches the imported theme.
     let mode_config = ThemeMode::config()?;
-    let mut mode = ThemeMode::get_entry(&mode_config)
-        .map(|m| m)
-        .unwrap_or_default();
+    let mut mode = ThemeMode::get_entry(&mode_config).unwrap_or_default();
 
     if mode.is_dark != is_dark {
         mode.set_is_dark(&mode_config, is_dark)

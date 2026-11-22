@@ -1,3 +1,5 @@
+use std::fmt;
+
 use cosmic::{
     Apply, Element, Theme,
     iced::{
@@ -424,13 +426,13 @@ impl Default for LayoutPreview {
     }
 }
 
-impl ToString for Position {
-    fn to_string(&self) -> String {
-        match self {
+impl fmt::Display for Position {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+        formatter.write_str(&match self {
             Position::Top => fl!("top"),
             Position::Bottom => fl!("bottom"),
             Position::Left => fl!("left"),
             Position::Right => fl!("right"),
-        }
+        })
     }
 }

@@ -52,7 +52,7 @@ impl TryFrom<RemoteTheme> for TempColorScheme {
             id: value.uuid,
             name: value.name,
             theme_builder: builder.clone(),
-            theme: builder.build().into(),
+            theme: builder.build(),
             author: value.author.filter(|x| !x.is_empty()),
             link: value.link.filter(|x| !x.is_empty()),
             downloads: Some(value.downloads),
