@@ -1,10 +1,7 @@
-use cosmic::{
-    Element, Task,
-    cosmic_config::{Config, CosmicConfigEntry},
-    widget,
-};
+use cosmic::{Element, Task, cosmic_config::Config, widget};
 use cosmic_panel_config::{AutoHideBehavior, CosmicPanelConfig};
 
+use crate::app::core::config::{load_panel_config, padding_override, panel_border_radius};
 use crate::app::core::reset::reset_cosmic_config;
 use crate::icon;
 
@@ -23,23 +20,19 @@ pub struct Dock {
 impl Default for Dock {
     fn default() -> Self {
         let dock_helper = CosmicPanelConfig::cosmic_config("Dock").ok();
-        let dock_config = dock_helper.as_ref().and_then(|config_helper| {
-            let panel_config = CosmicPanelConfig::get_entry(config_helper).ok()?;
-            (panel_config.name == "Dock").then_some(panel_config)
-        });
+        let dock_config = dock_helper
+            .as_ref()
+            .and_then(|helper| load_panel_config(helper, "Dock"));
         let padding = dock_config
-            .clone()
-            .map(|config| config.padding)
+            .as_ref()
+            .and_then(|config| config.padding_override)
             .unwrap_or(0);
         let margin = dock_config.clone().map(|config| config.margin).unwrap_or(0);
         let spacing = dock_config
             .clone()
             .map(|config| config.spacing)
             .unwrap_or(0);
-        let border_radius = dock_config
-            .clone()
-            .map(|config| config.border_radius)
-            .unwrap_or(0);
+        let border_radius = dock_config.as_ref().map(panel_border_radius).unwrap_or(0);
         let border_width = dock_config
             .clone()
             .map(|config| config.border_width)
@@ -232,7 +225,8 @@ impl Dock {
         match message {
             Message::SetPadding(padding) => {
                 self.padding = padding;
-                let update = dock_config.set_padding(dock_helper, self.padding);
+                let update =
+                    dock_config.set_padding_override(dock_helper, padding_override(self.padding));
                 if let Err(err) = update {
                     log::error!("Error updating dock padding: {}", err);
                 }
@@ -253,7 +247,8 @@ impl Dock {
             }
             Message::SetBorder(border_radius) => {
                 self.border_radius = border_radius;
-                let update = dock_config.set_border_radius(dock_helper, self.border_radius);
+                let update =
+                    dock_config.set_border_radius_override(dock_helper, Some(self.border_radius));
                 if let Err(err) = update {
                     log::error!("Error updating panel border: {}", err);
                 }

@@ -133,7 +133,8 @@ impl Layouts {
             Message::Apply => {
                 if let Some(layout) = &self.selected_layout {
                     if let Err(e) = load_template(layout.schema.clone()) {
-                        eprintln!("Failed to load template: {}", e);
+                        log::error!("Failed to apply layout {}: {e:#}", layout.name);
+                        return Task::none();
                     }
                     self.selected_layout = None;
                 }

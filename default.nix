@@ -49,23 +49,20 @@ pkgs.callPackage (
     cargoLock = {
       lockFile = ./Cargo.lock;
       outputHashes = {
-        "accesskit-0.16.0" = "sha256-uoLcd116WXQTu1ZTfJDEl9+3UPpGBN/QuJpkkGyRADQ=";
+        "accesskit-0.22.0" = "sha256-6TWK4HXc2a4XSf13/nksZoihMqZurQ7tBGY8+2DaPuY=";
         "atomicwrites-0.4.2" = "sha256-QZSuGPrJXh+svMeFWqAXoqZQxLq/WfIiamqvjJNVhxA=";
-        "clipboard_macos-0.1.0" = "sha256-+8CGmBf1Gl9gnBDtuKtkzUE5rySebhH7Bsq/kNlJofY=";
-        "cosmic-config-1.0.0" = "sha256-6FlFi1u7l7BVjm5JVI6jB7KOUpFUhhWvadoOECmx8hI=";
+        "clipboard_macos-0.1.0" = "sha256-WO3JFbE+6ESRAfkxrnEFeZyGuhUHLOKOVHcGQyHwoK0=";
+        "cosmic-client-toolkit-0.2.0" = "sha256-5BEUK/+RwSk6X3/4NRY91Ef1b/vZ0nk0oObN0Y1ylz0=";
+        "cosmic-config-1.0.0" = "sha256-QgZqsfHpg7+JwV7IT1Fa/nBanm2JVI4ohN0yBFGt6/E=";
         "cosmic-ext-config-templates-3.0.0" = "sha256-2g+clhM4tVMADJ9I/odR+VBFOVWtqroez9iG5vkq6pI=";
-        "cosmic-panel-config-0.1.0" = "sha256-d21/ydBbT/lWudx9+hEDu7PlbIbORr3tqWcvMzenxr8=";
-        "cosmic-text-0.17.1" = "sha256-NHjJBE/WSMhN29CKTuB7PyJv4y2JByi5pyTUDtVoF7g=";
-        "dpi-0.1.1" = "sha256-yfGGUoKKZCqrUSNyrN8FpIl1SNKaElO5QOkSBW/YwF4=";
-        "iced_glyphon-0.6.0" = "sha256-u1vnsOjP8npQ57NNSikotuHxpi4Mp/rV9038vAgCsfQ=";
-        "smithay-clipboard-0.8.0" = "sha256-4InFXm0ahrqFrtNLeqIuE3yeOpxKZJZx+Bc0yQDtv34=";
-        "softbuffer-0.4.1" = "sha256-/ocK79Lr5ywP/bb5mrcm7eTzeBbwpOazojvFUsAjMKM=";
-        # "taffy-0.3.11" = "sha256-SCx9GEIJjWdoNVyq+RZAGn0N71qraKZxf9ZWhvyzLaI=";
-
-        "cosmic-client-toolkit-0.1.0" = "sha256-KvXQJ/EIRyrlmi80WKl2T9Bn+j7GCfQlcjgcEVUxPkc=";
-        "cosmic-freedesktop-icons-0.4.0" = "sha256-D4bWHQ4Dp8UGiZjc6geh2c2SGYhB7mX13THpCUie1c4=";
-        "cosmic-settings-config-0.1.0" = "sha256-CtHy8qy7CatbErNZKu1pLFC9aUWLj0r87+lvRB16oSE=";
-        "cosmic-settings-daemon-0.1.0" = "sha256-1yVIL3SQnOEtTHoLiZgBH21holNxcOuToyQ+QdvqoBg=";
+        "cosmic-freedesktop-icons-0.4.0" = "sha256-tPriTi5L0mFMHjo5xpF5cmKGHqlX3WUO7EZAgVdBpS4=";
+        "cosmic-panel-config-1.11.0" = "sha256-qBCQZOCgWjRVmu8KqSME2eoRfW78tL8bfWP7NAd5v/A=";
+        "cosmic-settings-config-1.11.0" = "sha256-gFd6uEZw3SWGjuf59K1ixs/wxS5zeWby/OprECHAN2M=";
+        "cosmic-settings-daemon-zbus-1.0.0" = "sha256-suu8Wmzqe9EGo+LrOQ7N0iVydT/X8qPsU4grqTWD+Tw=";
+        "cryoglyph-0.1.0" = "sha256-10JUHl1ktbqLaReuiU3HPa4r2KvsoryyJoF3BFoge3U=";
+        "dpi-0.1.2" = "sha256-/H+D2Szeaufte6gbGQelOcvU4JhncJ9k9XTFr0q7PTw=";
+        "smithay-clipboard-0.8.0" = "sha256-GojAFRbhJcP0Rpr+v9WOivgW9x38PZdeBWTbMhkDB3A=";
+        "softbuffer-0.4.1" = "sha256-9Ret/nfieBFl4yJ9TddyWsSuS7sI4QAza/TZrxYMb+I=";
       };
     };
 

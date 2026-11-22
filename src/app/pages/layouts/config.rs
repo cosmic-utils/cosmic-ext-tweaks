@@ -1,4 +1,7 @@
-use crate::{Error, app::App};
+use crate::{
+    Error,
+    app::{App, core::panel_compat},
+};
 
 use super::{Message, preview::LayoutPreview};
 use cosmic::{Application, Element, widget};
@@ -54,7 +57,7 @@ impl Layout {
                 let path = entry.path();
                 if path.extension().and_then(|s| s.to_str()) == Some("ron") {
                     let contents = std::fs::read_to_string(&path)?;
-                    let layout = ron::from_str::<Layout>(&contents)?;
+                    let layout = panel_compat::from_str::<Layout>(&contents)?;
                     layouts.push(layout);
                 }
             }

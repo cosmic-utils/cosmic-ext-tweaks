@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout app source at release commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: source
           ref: ${{ github.event.release.tag_name }}
@@ -23,7 +23,7 @@ jobs:
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Checkout Flathub manifest repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: flathub/dev.edfloreshz.CosmicTweaks
           path: flathub
@@ -60,7 +60,7 @@ jobs:
           mv "$MANIFEST.tmp" "$MANIFEST"
 
       - name: Open PR to Flathub
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           path: flathub
           token: ${{ secrets.FLATHUB_PAT }}

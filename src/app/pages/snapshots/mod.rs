@@ -3,8 +3,8 @@ use cosmic::{Application, Element, Task, iced::Length, widget};
 use cosmic_ext_config_templates::load_template;
 use dirs::data_local_dir;
 
-use crate::app::App;
 use crate::app::pages::snapshots::config::SnapshotKind;
+use crate::app::{App, core::panel_compat};
 use crate::icon_handle;
 
 pub mod config;
@@ -24,7 +24,7 @@ impl Snapshots {
             .expect("Failed to read snapshots directory")
             .filter_map(|entry| entry.ok())
             .filter_map(|entry| std::fs::read_to_string(entry.path()).ok())
-            .filter_map(|entry| ron::from_str(&entry).ok())
+            .filter_map(|entry| panel_compat::from_str(&entry).ok())
             .collect()
     }
 }

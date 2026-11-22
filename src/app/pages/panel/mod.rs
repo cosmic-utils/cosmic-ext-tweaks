@@ -6,6 +6,7 @@ use cosmic::{
 use cosmic_panel_config::{AutoHideBehavior, CosmicPanelConfig};
 use serde::{Deserialize, Serialize};
 
+use crate::app::core::config::{load_panel_config, padding_override, panel_border_radius};
 use crate::app::core::reset::reset_cosmic_config;
 use crate::icon;
 
@@ -50,10 +51,9 @@ pub struct CosmicPanel {
 impl Default for Panel {
     fn default() -> Self {
         let panel_helper = CosmicPanelConfig::cosmic_config("Panel").ok();
-        let panel_config = panel_helper.as_ref().and_then(|config_helper| {
-            let panel_config = CosmicPanelConfig::get_entry(config_helper).ok()?;
-            (panel_config.name == "Panel").then_some(panel_config)
-        });
+        let panel_config = panel_helper
+            .as_ref()
+            .and_then(|helper| load_panel_config(helper, "Panel"));
         let (cosmic_panel_config_helper, cosmic_panel_config) =
             match cosmic_config::Config::new("com.system76.CosmicPanel", 1) {
                 Ok(config_handler) => {
@@ -97,8 +97,8 @@ impl Default for Panel {
             };
 
         let padding = panel_config
-            .clone()
-            .map(|config| config.padding)
+            .as_ref()
+            .and_then(|config| config.padding_override)
             .unwrap_or(0);
         let margin = panel_config
             .clone()
@@ -108,10 +108,7 @@ impl Default for Panel {
             .clone()
             .map(|config| config.spacing)
             .unwrap_or(0);
-        let border_radius = panel_config
-            .clone()
-            .map(|config| config.border_radius)
-            .unwrap_or(0);
+        let border_radius = panel_config.as_ref().map(panel_border_radius).unwrap_or(0);
         let panel_size = panel_config
             .clone()
             .map(|config| config.size)
@@ -366,7 +363,8 @@ impl Panel {
         match message {
             Message::SetPadding(padding) => {
                 self.padding = padding;
-                let update = panel_config.set_padding(panel_helper, self.padding);
+                let update =
+                    panel_config.set_padding_override(panel_helper, padding_override(self.padding));
                 if let Err(err) = update {
                     log::error!("Error updating panel padding: {}", err);
                 }
@@ -387,7 +385,8 @@ impl Panel {
             }
             Message::SetBorder(border_radius) => {
                 self.border_radius = border_radius;
-                let update = panel_config.set_border_radius(panel_helper, self.border_radius);
+                let update =
+                    panel_config.set_border_radius_override(panel_helper, Some(self.border_radius));
                 if let Err(err) = update {
                     log::error!("Error updating panel border: {}", err);
                 }
